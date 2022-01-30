@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from posixpath import split
 import random
 from unittest import result
@@ -104,7 +105,7 @@ class ChessBoard:
     queen represents black player
     returns dict which each player points
     """
-    def __getPointsProblem6(self, tower_row, tower_col, officer_row, officer_col,queen_row, queen_col):
+    def __getPointsProblem6(self, tower_row, tower_col, officer_row, officer_col,queen_row, queen_col) -> dict:
         white_player_points = 0
         black_player_points = 0
         # check for white player
@@ -117,7 +118,7 @@ class ChessBoard:
             if(officer_row - i == queen_row and officer_col - i == queen_col):
                 officer_eats_queen = True
             elif(officer_row - i == queen_row and officer_col + i == queen_col):
-                return 0
+                officer_eats_queen = True
             elif(officer_row + i == queen_row and officer_col - i == queen_col):
                 officer_eats_queen = True
             elif(officer_row + i == queen_row and officer_col + i == queen_col):
@@ -128,8 +129,7 @@ class ChessBoard:
             white_player_points += 1
         if officer_eats_queen:
             white_player_points += 1
-
-        # check for black player
+        # # check for black player
         if queen_row == tower_row or queen_col == tower_col:
             black_player_points += 1
         if queen_row == officer_row or queen_col == officer_col:
@@ -156,8 +156,7 @@ class ChessBoard:
             elif(queen_row + i == officer_row and queen_col + i == officer_col):
                 black_player_points += 1
             i += 1
-        result = {"white_player_points": white_player_points, "black_player_points": black_player_points}
-        return result
+        return { "white_player_points": white_player_points, "black_player_points": black_player_points}
     """
     func for generating the random games for problem6 
     and printing the results
@@ -165,7 +164,7 @@ class ChessBoard:
     get generated (WT represents white tower, 
     WO represents white officer, BQ represents black queen)
     """
-    def generateGamesProblem6(self) -> None:
+    def generateGamesProblem6(self, printBoard) -> None:
         white_player_points = 0
         black_player_points = 0
         # generate the random 100 games for the problem6
@@ -180,10 +179,9 @@ class ChessBoard:
             self.__chessboard[tower_row][tower_col] = "WT"
             self.__chessboard[officer_row][officer_col] = "WO"
             self.__chessboard[queen_row][queen_col] = "BQ"
-            # if print:
-            self.__printBoard()
+            if printBoard:
+                self.__printBoard()
             # check who eats who
-            print(i)
             results = self.__getPointsProblem6(tower_row, tower_col, officer_row, officer_col, queen_row, queen_col)
             white_player_points += results["white_player_points"]
             black_player_points += results["black_player_points"]
