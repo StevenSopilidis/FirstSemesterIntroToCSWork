@@ -10,4 +10,4 @@ board = ChessBoard(7, 7)
 board.generateGamesProblem8(100, False)
 # and finally for the 7 * 8 
 chessboardboard = ChessBoard(7, 8)
-board.generateGamesProblem8(100, False)
+board.generateGamesProblem8(100, True)
